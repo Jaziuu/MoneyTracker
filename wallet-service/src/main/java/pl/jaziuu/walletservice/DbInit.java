@@ -31,7 +31,6 @@ public class DbInit implements CommandLineRunner {
 
 //        Wallet wallet = new Wallet("Admin wallet",1L);
 //        Income income = new Income();
-//        income.setWalletId(wallet.getId());
 //        income.setAmount(222);
 //        income.setDescription("Test");
 //        income.setTitle("Title test");
@@ -41,7 +40,6 @@ public class DbInit implements CommandLineRunner {
 //        wallet.setIncomes(walletIncomes);
 //
 //        Expense expense = new Expense();
-//        expense.setWalletId(wallet.getId());
 //        expense.setAmount(2323);
 //        expense.setDescription("TestExpense");
 //        expense.setTitle("ExTestTitle");
@@ -52,6 +50,11 @@ public class DbInit implements CommandLineRunner {
 //        wallet.setExpenses(walletExpenses);
 //
 //        walletRepository.save(wallet);
+//
+//        income.setWalletId(wallet.getId());
+//        incomeRepository.save(income);
+//        expense.setWalletId(wallet.getId());
+//        expenseRepository.save(expense);
 
     }
 }
