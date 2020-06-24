@@ -1,11 +1,10 @@
 package pl.jaziuu.walletservice.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.jaziuu.walletservice.model.Wallet;
 import pl.jaziuu.walletservice.repository.WalletRepository;
+
+import java.util.List;
 
 @RestController
 public class WalletController {
@@ -21,5 +20,10 @@ public class WalletController {
         Wallet wallet = new Wallet(name,userId);
         walletRepository.save(wallet);
         System.out.println("Wallet Added");
+    }
+
+    @GetMapping("{userId}/getWallets")
+    public List<Wallet> getWallets(@PathVariable Long userId){
+        return walletRepository.getAllByUserId(userId);
     }
 }
