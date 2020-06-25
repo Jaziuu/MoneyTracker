@@ -1,8 +1,8 @@
 package pl.jaziuu.walletservice.controller;
 
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.web.bind.annotation.*;
-import pl.jaziuu.walletservice.controller.viewmodel.IncomeViewModel;
+import pl.jaziuu.walletservice.controller.viewmodel.IncomeExpenseViewModel;
+import pl.jaziuu.walletservice.model.Expense;
 import pl.jaziuu.walletservice.model.Income;
 import pl.jaziuu.walletservice.model.Wallet;
 import pl.jaziuu.walletservice.repository.ExpenseRepository;
@@ -46,13 +46,13 @@ public class WalletController {
     }
 
     @PostMapping("addIncome/{walletId}")
-    public void addIncome(@PathVariable Long walletId, @RequestBody IncomeViewModel incomeViewModel){
+    public void addIncome(@PathVariable Long walletId, @RequestBody IncomeExpenseViewModel incomeExpenseViewModel){
         // TODO: 6/24/2020 create service
         Income income = new Income();
-        income.setTitle(incomeViewModel.getTitle());
-        income.setDescription(incomeViewModel.getDescription());
-        income.setAmount(incomeViewModel.getAmount());
-        income.setDate(incomeViewModel.getDate());
+        income.setTitle(incomeExpenseViewModel.getTitle());
+        income.setDescription(incomeExpenseViewModel.getDescription());
+        income.setAmount(incomeExpenseViewModel.getAmount());
+        income.setDate(incomeExpenseViewModel.getDate());
         income.setWalletId(walletId);
         incomeRepository.save(income);
         var wallet = walletRepository.getById(walletId);
@@ -65,16 +65,51 @@ public class WalletController {
     }
 
     @PostMapping("updateIncome/{incomeId}")
-    public void updateIncome(@PathVariable Long incomeId, @RequestBody IncomeViewModel incomeViewModel){
+    public void updateIncome(@PathVariable Long incomeId, @RequestBody IncomeExpenseViewModel incomeExpenseViewModel){
         var optionalIncome = incomeRepository.findById(incomeId);
         if(optionalIncome.isPresent()){
             // TODO: 6/24/2020 to service
             var income = optionalIncome.get();
-            income.setTitle(incomeViewModel.getTitle());
-            income.setDescription(incomeViewModel.getDescription());
-            income.setAmount(incomeViewModel.getAmount());
-            income.setDate(incomeViewModel.getDate());
+            income.setTitle(incomeExpenseViewModel.getTitle());
+            income.setDescription(incomeExpenseViewModel.getDescription());
+            income.setAmount(incomeExpenseViewModel.getAmount());
+            income.setDate(incomeExpenseViewModel.getDate());
             incomeRepository.save(income);
+        }
+    }
+
+
+
+    @PostMapping("addExpense/{walletId}")
+    public void addExpense(@PathVariable Long walletId, @RequestBody IncomeExpenseViewModel incomeExpenseViewModel){
+        // TODO: 6/24/2020 create service
+        Expense expense = new Expense();
+        expense.setTitle(incomeExpenseViewModel.getTitle());
+        expense.setDescription(incomeExpenseViewModel.getDescription());
+        expense.setAmount(incomeExpenseViewModel.getAmount());
+        expense.setDate(incomeExpenseViewModel.getDate());
+        expense.setWalletId(walletId);
+        expenseRepository.save(expense);
+        var wallet = walletRepository.getById(walletId);
+        if(wallet.isPresent()) {
+            var walletExpenses = wallet.get().getExpenses();
+            walletExpenses.add(expense);
+            wallet.get().setExpenses(walletExpenses);
+            walletRepository.save(wallet.get());
+        }
+    }
+
+    @PostMapping("updateExpense/{expenseId}")
+    public void updateExpense(@PathVariable Long expenseId, @RequestBody IncomeExpenseViewModel incomeExpenseViewModel){
+        var optionalExpense = expenseRepository.findById(expenseId);
+        if(optionalExpense.isPresent()){
+            // TODO: 6/24/2020 to service
+            var expense = optionalExpense.get();
+            expense.setTitle(incomeExpenseViewModel.getTitle());
+            expense.setDescription(incomeExpenseViewModel.getDescription());
+            expense.setAmount(incomeExpenseViewModel.getAmount());
+            expense.setDate(incomeExpenseViewModel.getDate());
+            expenseRepository.save(expense);
         }
     }
 

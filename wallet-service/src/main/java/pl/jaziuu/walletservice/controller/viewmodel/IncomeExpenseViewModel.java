@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class IncomeViewModel {
+public class IncomeExpenseViewModel {
 
     private Date date;
     private String title;
