@@ -28,4 +28,5 @@ public class Expense {
     private String title;
     private String description;
     private double amount;
+    private ExpenseType expenseType;
 }

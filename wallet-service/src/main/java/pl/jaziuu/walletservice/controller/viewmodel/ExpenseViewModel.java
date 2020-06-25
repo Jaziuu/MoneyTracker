@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.jaziuu.walletservice.model.ExpenseType;
+import pl.jaziuu.walletservice.model.IncomeType;
 
 import java.util.Date;
 
@@ -11,11 +13,12 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class IncomeExpenseViewModel {
+public class ExpenseViewModel {
 
     private Date date;
     private String title;
     private String description;
     private double amount;
+    private ExpenseType expenseType;
 
 }
